@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MiniGameName: color_scrap
   Version: 0.1.5
-  Url: 
-  CustomRenderPipelineAsset: {fileID: 0}
+  Url: https://pub-d830ce4ea74d4073b949eaa5de257816.r2.dev
+  CustomRenderPipelineAsset: {fileID: 11400000, guid: 681886c5eb7344803b6206f758bf0b1c, type: 2}
