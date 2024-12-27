@@ -1,0 +1,14 @@
+{
+  "name": "com.appidea.minigames.color_scrap",
+  "version": "0.1.5",
+  "displayName": "Colour scrap",
+  "description": "Scrapscription",
+  "dependencies": {
+    "com.unity.addressables": "1.21.21",
+    "com.unity.render-pipelines.universal": "14.0.10"
+  },
+  "unity": "2022.3",
+  "author": {
+    "name": "Zucc"
+  }
+}

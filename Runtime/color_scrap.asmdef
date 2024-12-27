@@ -1,0 +1,17 @@
+{
+    "name": "com.appidea.MiniGamePlatform.color_scrap",
+    "rootNamespace": "com.appidea.MiniGamePlatform.color_scrap",
+    "references": [
+        "com.appidea.MiniGamePlatform.CommunicationAPI",
+        "Unity.Addressables"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
