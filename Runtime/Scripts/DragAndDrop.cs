@@ -1,3 +1,4 @@
+using Codice.Client.Commands;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -51,25 +52,27 @@ public class DragAndDrop : MonoBehaviour
                     Vector3 newPos = touchPos + offset; // Apply the offset.
                     if (transform.position != newPos) transform.position = newPos;
                 }
+                CheckRelease(false);
                 break;
 
             case TouchPhase.Ended:  // Release the object when touch ends.
             case TouchPhase.Canceled: // Release the object when touch is canceled.
-                CheckRelease();
+                held = false;
+                CheckRelease(true);
                 break;
         }
     }
 
-    void CheckRelease()
+    void CheckRelease(bool released)
     {
-        if (held) held = false;
-
         // If there is a target destination...
         if (target != null)
         {
             // Compare the distance of the object to its target destination.
             if (Vector3.Distance(transform.position, target.position) <= distanceThreshold)
             {
+                if (held) held = false;
+
                 // Set the position to the target's.
                 transform.position = target.position;
 
@@ -81,7 +84,7 @@ public class DragAndDrop : MonoBehaviour
             }
 
             // Otherwise, return to the original position, if necessary.
-            else if (returnOnRelease) transform.position = startPosition;
+            else if (returnOnRelease && released) transform.position = startPosition;
         }
     }
 }

@@ -127,7 +127,7 @@ public class ScrapCursorManager : MonoBehaviour
     public void WinGame()
     {
         print("Won Game");
-        _entryPoint.InvokeGameFinished();
+        SetFinishForPackage();
     }
 
     public void SetEntryPoint(ColorScrapEntryPoint entryPoint)
