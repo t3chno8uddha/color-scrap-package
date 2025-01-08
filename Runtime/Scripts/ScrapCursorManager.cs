@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ScrapCursorManager : MonoBehaviour
 {
-    [SerializeField] Transform scrapParticle;
     [SerializeField] float zDistance;
 
     [SerializeField] float threshold = 2f;
@@ -23,6 +22,12 @@ public class ScrapCursorManager : MonoBehaviour
     ColorScrapEntryPoint _entryPoint;
     [SerializeField] Button homeButton;
 
+    [SerializeField] GameObject penCursor;
+
+    TrailRenderer trail;
+
+    [SerializeField] Transform lineParent;
+
     private void Awake()
     {
         homeButton.onClick.AddListener(FinishOnButton);
@@ -35,14 +40,12 @@ public class ScrapCursorManager : MonoBehaviour
 
     void Start()
     {
-        scrapCam.targetTexture = NewText();
         Shader.SetGlobalTexture("_ScrapTexture", scrapCam.targetTexture);
 
-        maskCam.targetTexture = NewText();
         Shader.SetGlobalTexture("_ScrapMaskTexture", maskCam.targetTexture);
     }
 
-    RenderTexture NewText() {  return new RenderTexture(256, 256, 16); }
+    //RenderTexture NewText() {  return new RenderTexture(256, 256, 16); }
 
     void Update()
     {
@@ -50,46 +53,42 @@ public class ScrapCursorManager : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (scrapParticle)
+            if (touch.phase == TouchPhase.Began)
             {
-                if (touch.phase == TouchPhase.Began)
+                if (!trail)
                 {
-                    if (!scrapParticle.gameObject.activeInHierarchy) { scrapParticle.gameObject.SetActive(true); }
-
-                    Vector3 touchPosition = touch.position;
-                    touchPosition.z = zDistance; // Set an appropriate Z distance
-
-                    Vector3 newPosition = Camera.main.ScreenToWorldPoint(touchPosition);
-
-                    scrapParticle.position = newPosition;
-                    tapped = true;
+                    trail = Instantiate(penCursor, lineParent).GetComponent<TrailRenderer>();
                 }
-                else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-                {
-                    Vector3 touchPosition = touch.position;
-                    touchPosition.z = zDistance; // Set an appropriate Z distance
 
-                    Vector3 newPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+                Vector3 touchPosition = touch.position;
+                touchPosition.z = zDistance; // Set an appropriate Z distance
 
-                    scrapParticle.position = Vector3.MoveTowards(scrapParticle.position, newPosition, smoothness * Vector3.Distance(scrapParticle.position, newPosition) * Time.deltaTime);
-                }
-                else if (touch.phase == TouchPhase.Ended)
-                {
-                    CheckSimilarity();
-                }
+                Vector3 newPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+
+                trail.transform.position = newPosition;
+                tapped = true;
+            }
+            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            {
+                Vector3 touchPosition = touch.position;
+                touchPosition.z = zDistance; // Set an appropriate Z distance
+
+                Vector3 newPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+
+                trail.transform.position = Vector3.MoveTowards(trail.transform.position, newPosition, smoothness * Vector3.Distance(trail.transform.position, newPosition) * Time.deltaTime);
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                CheckSimilarity();
             }
         }
         else if (Input.touchCount == 0 && tapped) // No touches but previously tapped
         {
-            if (scrapParticle && scrapParticle.gameObject.activeInHierarchy)
-            {
-                scrapParticle.gameObject.SetActive(false);
-            }
             tapped = false;
         }
     }
 
-    void CheckSimilarity()
+    public void CheckSimilarity()
     {
         Texture2D tex = new Texture2D(finalTex.width, finalTex.height, TextureFormat.RGBA32, false);
 
