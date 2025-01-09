@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ScrapCursorManager : MonoBehaviour
 {
-    [SerializeField] float zDistance;
+    [SerializeField] float zDist = 10;
 
     [SerializeField] float threshold = 2f;
 
@@ -61,7 +61,7 @@ public class ScrapCursorManager : MonoBehaviour
                 }
 
                 Vector3 touchPosition = touch.position;
-                touchPosition.z = zDistance; // Set an appropriate Z distance
+                touchPosition.z = zDist; // Set an appropriate Z distance
 
                 Vector3 newPosition = Camera.main.ScreenToWorldPoint(touchPosition);
 
@@ -71,7 +71,7 @@ public class ScrapCursorManager : MonoBehaviour
             else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             {
                 Vector3 touchPosition = touch.position;
-                touchPosition.z = zDistance; // Set an appropriate Z distance
+                touchPosition.z = zDist; // Set an appropriate Z distance
 
                 Vector3 newPosition = Camera.main.ScreenToWorldPoint(touchPosition);
 
