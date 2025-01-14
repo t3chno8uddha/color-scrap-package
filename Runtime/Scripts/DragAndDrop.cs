@@ -32,7 +32,7 @@ public class DragAndDrop : MonoBehaviour
     {
         if (Input.touchCount == 0) return; // Exit early if no touch input.
 
-        Touch touch = Input.GetTouch(0);  // Get the first touch input.
+        Touch touch = Input.GetTouch(Input.touchCount - 1);  // Get the first touch input.
         Vector3 touchPos = mainCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, zDistance));
 
         switch (touch.phase)

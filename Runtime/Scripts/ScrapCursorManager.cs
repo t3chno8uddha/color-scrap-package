@@ -54,7 +54,7 @@ public class ScrapCursorManager : MonoBehaviour
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == TouchPhase.Began)
-            {
+            {   
                 trail = Instantiate(penCursor, lineParent).GetComponent<TrailRenderer>();
 
                 Vector3 touchPosition = touch.position;
