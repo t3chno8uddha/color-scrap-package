@@ -55,10 +55,7 @@ public class ScrapCursorManager : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                if (!trail)
-                {
-                    trail = Instantiate(penCursor, lineParent).GetComponent<TrailRenderer>();
-                }
+                trail = Instantiate(penCursor, lineParent).GetComponent<TrailRenderer>();
 
                 Vector3 touchPosition = touch.position;
                 touchPosition.z = zDist; // Set an appropriate Z distance
